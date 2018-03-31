@@ -1,5 +1,8 @@
 # hapi-auth-token JWT Authentication Example
 
+[![Build Status](https://travis-ci.org/CodeMangler/hapi-auth-token-jwt-example.svg?branch=master)](https://travis-ci.org/CodeMangler/hapi-auth-token-jwt-example)
+[![Coverage Status](https://coveralls.io/repos/github/CodeMangler/hapi-auth-token-jwt-example/badge.svg)](https://coveralls.io/github/CodeMangler/hapi-auth-token-jwt-example)
+
 This is an example Hapi application to demonstrate usage of the [hapi-auth-token](https://github.com/CodeMangler/hapi-auth-token) plugin with JWT.
 It shows how you can generate and consume JWT tokens with `hapi-auth-token`.
 To keep things simple, there's only one user, and the credentials are read off of ENV (`.env`).
