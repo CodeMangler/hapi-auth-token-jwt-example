@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import Hapi from 'hapi';
+import Hapi from '@hapi/hapi';
 import jwt from 'jsonwebtoken';
 import App from '../../src/App';
 
@@ -8,7 +8,7 @@ describe('ExampleAuthenticatedController', () => {
   let authToken = null;
 
   beforeEach(async () => {
-    server = new Hapi.Server();
+    server = Hapi.server();
     await new App(server).configure();
     authToken = jwt.sign({ user: 'aUser' }, process.env.JWT_SECRET);
   });

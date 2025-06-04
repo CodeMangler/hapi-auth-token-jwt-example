@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import Hapi from 'hapi';
+import Hapi from '@hapi/hapi';
 import jwt from 'jsonwebtoken';
 import App from '../../src/App';
 
@@ -7,7 +7,7 @@ describe('AuthenticationController', () => {
   let server = null;
 
   beforeEach(async () => {
-    server = new Hapi.Server();
+    server = Hapi.server();
     await new App(server).configure();
   });
 

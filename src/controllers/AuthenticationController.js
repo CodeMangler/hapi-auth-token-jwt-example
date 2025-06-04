@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 
-import Boom from 'boom';
+import Boom from '@hapi/boom';
 import Joi from 'joi';
 import jwt from 'jsonwebtoken';
 
@@ -17,10 +17,10 @@ export default class AuthenticationController {
       handler: this._create,
       config: {
         validate: {
-          payload: {
+          payload: Joi.object({
             username: Joi.string().required(),
             password: Joi.string().min(2).max(200).required(),
-          },
+          }),
         },
         auth: false,
         tags: ['api'],

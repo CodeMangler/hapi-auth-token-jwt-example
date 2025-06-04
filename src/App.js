@@ -5,10 +5,10 @@ import dotenv from 'dotenv';
 import fs from 'fs';
 import HapiAuthToken from 'hapi-auth-token';
 import HapiSwagger from 'hapi-swagger';
-import Inert from 'inert';
+import Inert from '@hapi/inert';
 import jwt from 'jsonwebtoken';
 import path from 'path';
-import Vision from 'vision';
+import Vision from '@hapi/vision';
 
 export default class App {
   constructor(server) {
@@ -23,15 +23,31 @@ export default class App {
   }
 
   async _registerPlugins() {
-    await this._server.register(Blipp);
+    await this._server.register({
+      plugin: Blipp
+    });
 
-    // Register hapi-auth-token
-    await this._server.register(HapiAuthToken);
+    await this._server.register({
+      plugin: HapiAuthToken
+    });
 
-    // Register hapi-swagger and it's peer dependencies
-    await this._server.register(Inert);
-    await this._server.register(Vision);
-    await this._server.register(HapiSwagger);
+    await this._server.register({
+      plugin: Inert
+    });
+    
+    await this._server.register({
+      plugin: Vision
+    });
+    
+    await this._server.register({
+      plugin: HapiSwagger,
+      options: {
+        info: {
+          title: 'API Documentation',
+          version: '1.0.0',
+        },
+      },
+    });
   }
 
   _configureAuth() {
@@ -69,6 +85,6 @@ export default class App {
 
   async start() {
     await this.configure();
-    this._server.start();
+    await this._server.start();
   }
 }
