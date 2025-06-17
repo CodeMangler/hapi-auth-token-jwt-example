@@ -24,21 +24,21 @@ export default class App {
 
   async _registerPlugins() {
     await this._server.register({
-      plugin: Blipp
+      plugin: Blipp,
     });
 
     await this._server.register({
-      plugin: HapiAuthToken
+      plugin: HapiAuthToken,
     });
 
     await this._server.register({
-      plugin: Inert
+      plugin: Inert,
     });
-    
+
     await this._server.register({
-      plugin: Vision
+      plugin: Vision,
     });
-    
+
     await this._server.register({
       plugin: HapiSwagger,
       options: {
@@ -76,7 +76,7 @@ export default class App {
 
   _loadControllers() {
     fs.readdirSync(path.join(__dirname, 'controllers'))
-      .filter(file => (file.indexOf('.') !== 0) && (file.slice(-3) === '.js'))
+      .filter((file) => (file.indexOf('.') !== 0) && (file.slice(-3) === '.js'))
       .forEach((file) => {
         const Controller = require(path.resolve(__dirname, 'controllers', file)).default;
         new Controller(this._server);
