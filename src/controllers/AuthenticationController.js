@@ -36,9 +36,8 @@ export default class AuthenticationController {
     // and optionally keep track of the JWT tokens issued here
     if (username === process.env.USERNAME && password === process.env.PASSWORD) {
       const jwtToken = jwt.sign({ user: username }, process.env.JWT_SECRET);
-      const sessionCookie = { authToken: jwtToken };
       // Return the JWT token in response body, AND set it on the auth cookie
-      return h.response(jwtToken).state('__AUTH', sessionCookie);
+      return h.response(jwtToken).state('__AUTH', jwtToken);
     }
 
     return Boom.unauthorized('Invalid username or password');

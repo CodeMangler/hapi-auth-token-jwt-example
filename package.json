@@ -4,7 +4,7 @@
   "description": "Example Hapi application demonstrating usage of hapi-auth-token plugin with JWT tokens",
   "scripts": {
     "start": "PORT=3000 node -r babel-core/register -r babel-polyfill bin/www",
-    "test": "NODE_ENV=test mocha --exit --require babel-core/register --require babel-polyfill test/**/*.test.js",
+    "test": "NODE_ENV=test mocha --exit --require dotenv/config --require babel-core/register --require babel-polyfill test/**/*.test.js dotenv_config_path=.env.test",
     "coverage": "nyc --reporter=text --reporter=lcov npm run test",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
@@ -19,6 +19,7 @@
     "@hapi/vision": "^7.0.3",
     "blipp": "^4.0.2",
     "dotenv": "^16.3.1",
+    "hapi-auth-jwt2": "^11.0.0",
     "hapi-auth-token": "^3.0.0",
     "hapi-swagger": "^17.1.0",
     "joi": "^17.9.2",
