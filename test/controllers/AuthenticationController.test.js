@@ -16,7 +16,7 @@ describe('AuthenticationController', () => {
       const response = await server.inject({
         url: '/login',
         method: 'POST',
-        payload: JSON.stringify({ username: 'aUser', password: 'aPassword' }),
+        payload: { username: 'aUser', password: 'aPassword' },
       });
       expect(response.statusCode).to.eq(200);
       expect(response.payload).to.eq(jwt.sign({ user: 'aUser' }, process.env.JWT_SECRET));

@@ -3,7 +3,7 @@
 import Blipp from 'blipp';
 import dotenv from 'dotenv';
 import fs from 'fs';
-import HapiAuthToken from 'hapi-auth-token';
+import hapiAuthJwt2 from 'hapi-auth-jwt2';
 import HapiSwagger from 'hapi-swagger';
 import Inert from '@hapi/inert';
 import jwt from 'jsonwebtoken';
@@ -27,9 +27,7 @@ export default class App {
       plugin: Blipp,
     });
 
-    await this._server.register({
-      plugin: HapiAuthToken,
-    });
+    await this._server.register(hapiAuthJwt2);
 
     await this._server.register({
       plugin: Inert,
@@ -51,27 +49,17 @@ export default class App {
   }
 
   _configureAuth() {
-    this._server.auth.strategy('api', 'token-auth', {
-      cookie: {
-        name: '__AUTH',
-        isSecure: false,
+    this._server.auth.strategy('jwt', 'jwt', {
+      key: process.env.JWT_SECRET,
+      validate: async (decoded, request, h) => {
+        // your validation logic
+        return { isValid: true };
       },
-
-      async validateToken(authToken) {
-        try {
-          const tokenContent = jwt.verify(authToken, process.env.JWT_SECRET);
-          return tokenContent && tokenContent.user;
-        } catch (err) {
-          return false;
-        }
-      },
-
-      async buildAuthCredentials(authToken) {
-        const tokenContent = jwt.decode(authToken);
-        return { user: tokenContent.user };
-      },
+      verifyOptions: { algorithms: ['HS256'] },
+      urlKey: 'token',
+      cookieKey: '__AUTH',
     });
-    this._server.auth.default('api');
+    this._server.auth.default('jwt');
   }
 
   _loadControllers() {

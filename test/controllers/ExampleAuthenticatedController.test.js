@@ -46,18 +46,17 @@ describe('ExampleAuthenticatedController', () => {
       const response = await server.inject({
         url: '/protected',
         method: 'GET',
-        headers: { Authorization: `Token ${authToken}` },
+        headers: { Authorization: `Bearer ${authToken}` },
       });
       expect(response.statusCode).to.eq(200);
       expect(response.payload).to.eq('Protected');
     });
 
     it('works with a valid token in the auth cookie', async () => {
-      const authCookieContent = Buffer.from(JSON.stringify({ authToken })).toString('base64');
       const response = await server.inject({
         url: '/protected',
         method: 'GET',
-        headers: { Cookie: `__AUTH=${authCookieContent};` },
+        headers: { Cookie: `__AUTH=${authToken};` },
       });
       expect(response.statusCode).to.eq(200);
       expect(response.payload).to.eq('Protected');
